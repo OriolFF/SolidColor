@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">キャンドルモード: %1$s</string>
+    <string name="candle_mode_on">オン</string>
+    <string name="candle_mode_off">オフ</string>
+    <string name="toggle_candle_mode">キャンドルモード切替</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">色を選択</string>
+    <string name="select">選択</string>
+    <string name="cancel">キャンセル</string>
+</resources>

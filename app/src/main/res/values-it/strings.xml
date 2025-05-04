@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Modalità candela: %1$s</string>
+    <string name="candle_mode_on">ATTIVA</string>
+    <string name="candle_mode_off">DISATTIVA</string>
+    <string name="toggle_candle_mode">Attiva/Disattiva Modalità Candela</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Scegli un colore</string>
+    <string name="select">Seleziona</string>
+    <string name="cancel">Annulla</string>
+</resources>

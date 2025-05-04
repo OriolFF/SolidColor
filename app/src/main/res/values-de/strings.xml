@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Kerzenmodus: %1$s</string>
+    <string name="candle_mode_on">AN</string>
+    <string name="candle_mode_off">AUS</string>
+    <string name="toggle_candle_mode">Kerzenmodus umschalten</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Farbe auswählen</string>
+    <string name="select">Auswählen</string>
+    <string name="cancel">Abbrechen</string>
+</resources>

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Modo vela: %1$s</string>
+    <string name="candle_mode_on">ATIVADO</string>
+    <string name="candle_mode_off">DESATIVADO</string>
+    <string name="toggle_candle_mode">Alternar Modo Vela</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Escolha uma cor</string>
+    <string name="select">Selecionar</string>
+    <string name="cancel">Cancelar</string>
+</resources>

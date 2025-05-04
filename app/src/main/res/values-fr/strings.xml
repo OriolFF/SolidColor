@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Mode bougie : %1$s</string>
+    <string name="candle_mode_on">ACTIVÉ</string>
+    <string name="candle_mode_off">DÉSACTIVÉ</string>
+    <string name="toggle_candle_mode">Basculer Mode Bougie</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Choisir une couleur</string>
+    <string name="select">Sélectionner</string>
+    <string name="cancel">Annuler</string>
+</resources>

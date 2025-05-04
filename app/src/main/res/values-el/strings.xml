@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Λειτουργία κεριού: %1$s</string>
+    <string name="candle_mode_on">ΕΝΕΡΓΗ</string>
+    <string name="candle_mode_off">ΑΝΕΝΕΡΓΗ</string>
+    <string name="toggle_candle_mode">Εναλλαγή Λειτουργίας Κεριού</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Επιλέξτε χρώμα</string>
+    <string name="select">Επιλογή</string>
+    <string name="cancel">Ακύρωση</string>
+</resources>

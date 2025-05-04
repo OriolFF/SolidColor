@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Mode espelma: %1$s</string>
+    <string name="candle_mode_on">ACTIVAT</string>
+    <string name="candle_mode_off">DESACTIVAT</string>
+    <string name="toggle_candle_mode">Alternar Mode Espelma</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Tria un color</string>
+    <string name="select">Seleccionar</string>
+    <string name="cancel">Cancel·lar</string>
+</resources>

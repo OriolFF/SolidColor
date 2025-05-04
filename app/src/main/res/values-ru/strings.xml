@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SolidLight</string>
+    
+    <!-- MainActivity strings -->
+    <string name="candle_mode_status">Режим свечи: %1$s</string>
+    <string name="candle_mode_on">ВКЛЮЧЕН</string>
+    <string name="candle_mode_off">ВЫКЛЮЧЕН</string>
+    <string name="toggle_candle_mode">Переключить Режим Свечи</string>
+    
+    <!-- Color picker dialog -->
+    <string name="pick_a_color">Выберите цвет</string>
+    <string name="select">Выбрать</string>
+    <string name="cancel">Отмена</string>
+</resources>

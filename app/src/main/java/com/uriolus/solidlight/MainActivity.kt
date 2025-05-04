@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -29,39 +30,58 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.uriolus.solidlight.data.datasource.PreferencesDataSource
+import com.uriolus.solidlight.data.repository.ColorSettingsRepositoryImpl
+import com.uriolus.solidlight.di.AppModule
+import com.uriolus.solidlight.domain.repository.ColorSettingsRepository
+import com.uriolus.solidlight.domain.usecase.GetColorSettingsUseCase
+import com.uriolus.solidlight.domain.usecase.SaveColorSettingsUseCase
 import com.uriolus.solidlight.ui.theme.SolidLightTheme
 
 class MainActivity : ComponentActivity() {
+
+    // Initialize dependencies
+    private val preferencesDataSource by lazy { PreferencesDataSource(applicationContext) }
+    private val colorSettingsRepository: ColorSettingsRepository by lazy {
+        ColorSettingsRepositoryImpl(preferencesDataSource)
+    }
+    private val getColorSettingsUseCase by lazy { GetColorSettingsUseCase(colorSettingsRepository) }
+    private val saveColorSettingsUseCase by lazy { SaveColorSettingsUseCase(colorSettingsRepository) }
+
+    // Initialize ViewModel with factory
+    private val viewModel: SolidColorViewModel by viewModels {
+        SolidColorViewModel.Factory(getColorSettingsUseCase, saveColorSettingsUseCase)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         // Make the app fullscreen
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        
+
         setContent {
-            SolidLightTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.Transparent
-                ) {
-                    SolidColorScreen()
-                }
+            // A surface container using the 'background' color from the theme
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = Color.Transparent
+            ) {
+                SolidColorScreen(viewModel)
             }
         }
     }
 }
 
+
 @Composable
-fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
+fun SolidColorScreen(viewModel: SolidColorViewModel) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
-    
+
     // Debug effect to monitor candle mode changes
     LaunchedEffect(state.candleMode) {
         Toast.makeText(
-            context, 
-            "Candle mode: ${if (state.candleMode) "ON" else "OFF"}", 
+            context,
+            "Candle mode: ${if (state.candleMode) "ON" else "OFF"}",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -92,7 +112,7 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
                     )
                 }
         )
-        
+
         // Floating action button - positioned higher to avoid bottom navigation bar
         FloatingActionButton(
             onClick = {
@@ -140,6 +160,19 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
 @Composable
 fun SolidColorScreenPreview() {
     SolidLightTheme {
-        SolidColorScreen()
+        SolidColorScreen(
+            viewModel = SolidColorViewModel(
+                GetColorSettingsUseCase(
+                    ColorSettingsRepositoryImpl(
+                        PreferencesDataSource(LocalContext.current)
+                    )
+                ),
+                SaveColorSettingsUseCase(
+                    ColorSettingsRepositoryImpl(
+                        PreferencesDataSource(LocalContext.current)
+                    )
+                )
+            )
+        )
     }
 }

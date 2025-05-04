@@ -4,11 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import com.uriolus.solidlight.ui.theme.SolidLightTheme
 
@@ -25,14 +32,58 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SolidColorScreen() {
-    // State for the background color, default to white
-    val backgroundColor by remember { mutableStateOf(Color.Yellow) }
-    
+    var backgroundColor by remember { mutableStateOf(Color.Yellow) }
+    var showColorDialog by remember { mutableStateOf(false) }
+
+    // Predefined color options
+    val colorOptions = listOf(
+        Color.Red to "Red",
+        Color.Green to "Green",
+        Color.Blue to "Blue",
+        Color.Yellow to "Yellow",
+        Color.White to "White",
+        Color.Black to "Black"
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onDoubleTap = {
+                        showColorDialog = true
+                    }
+                )
+            }
     )
+
+    if (showColorDialog) {
+        AlertDialog(
+            onDismissRequest = { showColorDialog = false },
+            title = { Text("Choose a color") },
+            text = {
+                // Show color options as buttons
+                Column {
+                    colorOptions.forEach { (color, label) ->
+                        Button(
+                            onClick = {
+                                backgroundColor = color
+                                showColorDialog = false
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(color)
+                        ) {
+                            Text(label)
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {}
+        )
+    }
 }
 
 @Preview(showBackground = true)

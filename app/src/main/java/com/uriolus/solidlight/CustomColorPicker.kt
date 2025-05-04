@@ -17,8 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+/**
+ * Color picker composable
+ */
 @Composable
 fun CustomColorPicker(
     modifier: Modifier = Modifier,
@@ -26,7 +30,6 @@ fun CustomColorPicker(
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp)
     ) {
         // Horizontal rainbow gradient
         ColorGradient(
@@ -111,29 +114,16 @@ fun ColorGradient(
     }
 }
 
-// Helper function to interpolate colors
-fun interpolateColor(colors: List<Color>, ratio: Float): Color {
-    if (colors.isEmpty()) return Color.Black
-    if (colors.size == 1) return colors.first()
-    
-    val segmentCount = colors.size - 1
-    val segmentSize = 1f / segmentCount
-    
-    val segmentIndex = (ratio / segmentSize).toInt().coerceAtMost(segmentCount - 1)
-    val segmentRatio = (ratio - segmentIndex * segmentSize) / segmentSize
-    
-    val startColor = colors[segmentIndex]
-    val endColor = colors[segmentIndex + 1]
-    
-    return Color(
-        alpha = lerp(startColor.alpha, endColor.alpha, segmentRatio),
-        red = lerp(startColor.red, endColor.red, segmentRatio),
-        green = lerp(startColor.green, endColor.green, segmentRatio),
-        blue = lerp(startColor.blue, endColor.blue, segmentRatio)
-    )
-}
-
-// Linear interpolation helper
-fun lerp(start: Float, end: Float, fraction: Float): Float {
-    return start + (end - start) * fraction
+@Preview(showBackground = true)
+@Composable
+fun CustomColorPickerPreview() {
+    Box(
+        modifier = Modifier
+            .background(Color.White)
+            .padding(16.dp)
+    ) {
+        CustomColorPicker(
+            onColorSelected = {}
+        )
+    }
 }

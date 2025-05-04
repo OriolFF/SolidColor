@@ -1,8 +1,10 @@
 package com.uriolus.solidlight
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,14 +12,16 @@ import kotlinx.coroutines.flow.asStateFlow
 // --- State ---
 data class SolidColorState(
     val backgroundColor: Color = Color.Yellow,
-    val showColorDialog: Boolean = false
+    val showColorDialog: Boolean = false,
+    val candleMode: Boolean = false
 )
 
-// --- Actions (Intents) ---
+// --- Actions ---
 sealed class SolidColorAction {
-    data object DoubleTap : SolidColorAction()
+    data object ToggleDialog : SolidColorAction()
     data class ColorChanged(val color: Color) : SolidColorAction()
-
+    data object CandleTapped : SolidColorAction()
+    data object CloseDialog : SolidColorAction()
 }
 
 // --- ViewModel ---
@@ -27,8 +31,11 @@ class SolidColorViewModel : ViewModel() {
 
     fun dispatch(action: SolidColorAction) {
         when (action) {
-            is SolidColorAction.DoubleTap -> {
-                _state.value = _state.value.copy(showColorDialog = true)
+            is SolidColorAction.ToggleDialog -> {
+                _state.value = _state.value.copy(showColorDialog = !_state.value.showColorDialog)
+            }
+            is SolidColorAction.CloseDialog -> {
+                _state.value = _state.value.copy(showColorDialog = false)
             }
             is SolidColorAction.ColorChanged -> {
                 _state.value = _state.value.copy(
@@ -36,7 +43,12 @@ class SolidColorViewModel : ViewModel() {
                     showColorDialog = false
                 )
             }
-
+            is SolidColorAction.CandleTapped -> {
+                _state.value = _state.value.copy(
+                    candleMode = !_state.value.candleMode,
+                    showColorDialog = false
+                )
+            }
         }
     }
 }

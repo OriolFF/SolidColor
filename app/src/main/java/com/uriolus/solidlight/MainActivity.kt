@@ -1,7 +1,6 @@
 package com.uriolus.solidlight
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,10 +9,10 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -79,24 +78,7 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
         state.backgroundColor
     }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            // Add a direct way to toggle candle mode for testing
-            FloatingActionButton(
-                onClick = {
-                    viewModel.dispatch(SolidColorAction.CandleTapped)
-                },
-                containerColor = if (state.candleMode) Color(0xFFFF9800) else Color(0xFF607D8B)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_candle),
-                    contentDescription = "Toggle Candle Mode",
-                    tint = Color.White
-                )
-            }
-        }
-    ) { padding ->
+    Box(modifier = Modifier.fillMaxSize()) {
         // Main background with double-tap gesture
         Box(
             modifier = Modifier
@@ -110,6 +92,23 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
                     )
                 }
         )
+        
+        // Floating action button
+        FloatingActionButton(
+            onClick = {
+                viewModel.dispatch(SolidColorAction.CandleTapped)
+            },
+            containerColor = if (state.candleMode) Color(0xFFFF9800) else Color(0xFF607D8B),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_candle),
+                contentDescription = "Toggle Candle Mode",
+                tint = Color.White
+            )
+        }
 
         // Show color picker dialog with candle
         if (state.showColorDialog) {
@@ -123,7 +122,7 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White),
+                        .background(Color(0xFFF8F8F8)),
                     onColorSelected = { color ->
                         viewModel.dispatch(SolidColorAction.ColorChanged(color))
                     },

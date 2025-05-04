@@ -33,7 +33,7 @@ fun CandleButton(
         modifier = modifier
             .size(128.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(if (active) Color.Yellow.copy(alpha = 0.3f) else Color.White)
+            .background(if (active) Color.Yellow.copy(alpha = 0.3f) else Color(0xFFF5F5F5))
             .clickable { onTap() }
     ) {
         Image(

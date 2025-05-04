@@ -93,7 +93,7 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
                 }
         )
         
-        // Floating action button
+        // Floating action button - positioned higher to avoid bottom navigation bar
         FloatingActionButton(
             onClick = {
                 viewModel.dispatch(SolidColorAction.CandleTapped)
@@ -101,7 +101,7 @@ fun SolidColorScreen(viewModel: SolidColorViewModel = viewModel()) {
             containerColor = if (state.candleMode) Color(0xFFFF9800) else Color(0xFF607D8B),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
+                .padding(bottom = 80.dp, end = 16.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_candle),

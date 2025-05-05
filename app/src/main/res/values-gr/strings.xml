@@ -8,7 +8,5 @@
     <string name="toggle_candle_mode">Εναλλαγή Λειτουργίας Κεριού</string>
     
     <!-- Color picker dialog -->
-    <string name="pick_a_color">Επιλέξτε χρώμα</string>
-    <string name="select">Επιλογή</string>
-    <string name="cancel">Ακύρωση</string>
+    <string name="pick_a_color">Επιλέξτε ένα χρώμα</string>
 </resources>

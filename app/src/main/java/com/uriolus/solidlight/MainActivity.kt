@@ -123,14 +123,14 @@ fun SolidColorScreen(viewModel: SolidColorViewModel) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f)),
+                    .background(Color.Gray.copy(alpha = 0.5f)),
                 contentAlignment = Alignment.Center
             ) {
                 ColorPickerWithCandle(
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFFF8F8F8)),
+                        .background(Color(0xFFE7E6E6)),
                     onColorSelected = { color ->
                         viewModel.dispatch(SolidColorAction.ColorChanged(color))
                     },

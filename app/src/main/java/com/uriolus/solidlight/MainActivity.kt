@@ -8,24 +8,20 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -34,18 +30,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import com.github.skydoves.colorpicker.compose.AlphaTile
-import com.github.skydoves.colorpicker.compose.BrightnessSlider
-import com.github.skydoves.colorpicker.compose.ColorEnvelope
-import com.github.skydoves.colorpicker.compose.HsvColorPicker
-import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.uriolus.solidlight.data.datasource.PreferencesDataSource
 import com.uriolus.solidlight.data.repository.ColorSettingsRepositoryImpl
 import com.uriolus.solidlight.domain.repository.ColorSettingsRepository
 import com.uriolus.solidlight.domain.usecase.GetColorSettingsUseCase
 import com.uriolus.solidlight.domain.usecase.SaveColorSettingsUseCase
 import com.uriolus.solidlight.ui.theme.SolidLightTheme
-import androidx.core.graphics.toColorInt
 
 class MainActivity : ComponentActivity() {
 
@@ -103,11 +93,23 @@ fun SolidColorScreen(viewModel: SolidColorViewModel) {
         ).show()
     }
 
+    // Get the background color - apply candle effect if active
+    val backgroundColor = if (state.candleMode) {
+        // Use the candle animation when candle is active
+        CandleAnimation.rememberCandleFlameColor(
+            baseColor = state.backgroundColor,
+            intensity = 0.10f  // Increased intensity to make it more noticeable
+        )
+    } else {
+        // Use the solid color when candle is not active
+        state.backgroundColor
+    }
+
     // Main content
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(state.backgroundColor)
+            .background(backgroundColor)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onDoubleTap = {
@@ -118,15 +120,26 @@ fun SolidColorScreen(viewModel: SolidColorViewModel) {
     ) {
         // Color picker dialog
         if (state.showColorDialog) {
-            ColorPickerDialog(
-                initialColor = state.backgroundColor,
-                onColorSelected = { color ->
-                    viewModel.dispatch(SolidColorAction.ColorChanged(color))
-                },
-                onDismissRequest = {
-                    viewModel.dispatch(SolidColorAction.CloseDialog)
-                }
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                ColorPickerWithCandle(
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFFF8F8F8)),
+                    onColorSelected = { color ->
+                        viewModel.dispatch(SolidColorAction.ColorChanged(color))
+                    },
+                    onCandleTapped = {
+                        viewModel.dispatch(SolidColorAction.CandleTapped)
+                    },
+                    candleActive = state.candleMode
+                )
+            }
         }
 
         // Floating action button - positioned higher to avoid bottom navigation bar
@@ -147,62 +160,6 @@ fun SolidColorScreen(viewModel: SolidColorViewModel) {
             )
         }
     }
-}
-
-@Composable
-fun ColorPickerDialog(
-    initialColor: Color,
-    onColorSelected: (Color) -> Unit,
-    onDismissRequest: () -> Unit
-) {
-    val controller = rememberColorPickerController()
-
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        title = null,
-        text = {
-            Column {
-                // Add title at the top of the content
-                Text(
-                    text = stringResource(R.string.pick_a_color),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
-                
-                HsvColorPicker(
-                    modifier = Modifier
-                        .size(300.dp)
-                        .padding(10.dp),
-                    controller = controller,
-                    onColorChanged = { colorEnvelope: ColorEnvelope ->
-                        // Apply color changes immediately
-                        // Convert the hexCode to a Color
-                        val color = Color(colorEnvelope.hexCode.toColorInt())
-                        onColorSelected(color)
-                    }
-                )
-                AlphaTile(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .padding(10.dp),
-                    controller = controller
-                )
-                BrightnessSlider(
-                    modifier = Modifier
-                        .padding(10.dp),
-                    controller = controller
-                )
-            }
-        },
-        confirmButton = { },
-        dismissButton = {
-            Button(onClick = onDismissRequest) {
-                Text(stringResource(R.string.cancel))
-            }
-        }
-    )
 }
 
 @Preview(showBackground = true)

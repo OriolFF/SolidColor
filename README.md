@@ -38,7 +38,7 @@ SolidLight follows clean architecture principles:
 - **UI Layer**: Jetpack Compose for modern, declarative UI
 - **Domain Layer**: Use cases for business logic
 - **Data Layer**: Repository pattern for data management
-- **Dependency Injection**: Manual DI for simplicity
+- **Dependency Injection**: Manual DI approach using AppModule as a service locator
 
 ## Technical Details
 

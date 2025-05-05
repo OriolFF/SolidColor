@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.uriolus.solidlight.data.datasource.PreferencesDataSource
 import com.uriolus.solidlight.data.repository.ColorSettingsRepositoryImpl
+import com.uriolus.solidlight.di.AppModule
 import com.uriolus.solidlight.domain.repository.ColorSettingsRepository
 import com.uriolus.solidlight.domain.usecase.GetColorSettingsUseCase
 import com.uriolus.solidlight.domain.usecase.SaveColorSettingsUseCase
@@ -39,13 +40,19 @@ import com.uriolus.solidlight.ui.theme.SolidLightTheme
 
 class MainActivity : ComponentActivity() {
 
-    // Initialize dependencies
-    private val preferencesDataSource by lazy { PreferencesDataSource(applicationContext) }
-    private val colorSettingsRepository: ColorSettingsRepository by lazy {
-        ColorSettingsRepositoryImpl(preferencesDataSource)
+    // Initialize dependencies using AppModule
+    private val preferencesDataSource by lazy { 
+        AppModule.providePreferencesDataSource(applicationContext) 
     }
-    private val getColorSettingsUseCase by lazy { GetColorSettingsUseCase(colorSettingsRepository) }
-    private val saveColorSettingsUseCase by lazy { SaveColorSettingsUseCase(colorSettingsRepository) }
+    private val colorSettingsRepository by lazy { 
+        AppModule.provideColorSettingsRepository(preferencesDataSource) 
+    }
+    private val getColorSettingsUseCase by lazy { 
+        AppModule.provideGetColorSettingsUseCase(colorSettingsRepository) 
+    }
+    private val saveColorSettingsUseCase by lazy { 
+        AppModule.provideSaveColorSettingsUseCase(colorSettingsRepository) 
+    }
 
     // Initialize ViewModel with factory
     private val viewModel: SolidColorViewModel by viewModels {

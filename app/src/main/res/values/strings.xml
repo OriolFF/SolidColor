@@ -9,6 +9,4 @@
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Pick a color</string>
-    <string name="select">Select</string>
-    <string name="cancel">Cancel</string>
 </resources>

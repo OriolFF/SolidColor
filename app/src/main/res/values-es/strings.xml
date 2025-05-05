@@ -3,12 +3,10 @@
     
     <!-- MainActivity strings -->
     <string name="candle_mode_status">Modo vela: %1$s</string>
-    <string name="candle_mode_on">ACTIVADO</string>
-    <string name="candle_mode_off">DESACTIVADO</string>
+    <string name="candle_mode_on">ENCENDIDO</string>
+    <string name="candle_mode_off">APAGADO</string>
     <string name="toggle_candle_mode">Alternar Modo Vela</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Elige un color</string>
-    <string name="select">Seleccionar</string>
-    <string name="cancel">Cancelar</string>
 </resources>

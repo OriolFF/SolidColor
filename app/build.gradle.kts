@@ -58,6 +58,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Jetpack Compose Color Picker
-    implementation(libs.compose.color.picker)
 }

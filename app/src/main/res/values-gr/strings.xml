@@ -6,6 +6,7 @@
     <string name="candle_mode_on">ΕΝΕΡΓΗ</string>
     <string name="candle_mode_off">ΑΝΕΝΕΡΓΗ</string>
     <string name="toggle_candle_mode">Εναλλαγή Λειτουργίας Κεριού</string>
+    <string name="double_tap_hint">Πατήστε δύο φορές για να αλλάξετε χρώμα</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Επιλέξτε ένα χρώμα</string>

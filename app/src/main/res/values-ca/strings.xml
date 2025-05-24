@@ -6,6 +6,7 @@
     <string name="candle_mode_on">ENCÈS</string>
     <string name="candle_mode_off">APAGAT</string>
     <string name="toggle_candle_mode">Canviar Mode Espelma</string>
+    <string name="double_tap_hint">Toca dues vegades per canviar el color</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Tria un color</string>

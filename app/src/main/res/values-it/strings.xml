@@ -6,6 +6,7 @@
     <string name="candle_mode_on">ATTIVA</string>
     <string name="candle_mode_off">DISATTIVA</string>
     <string name="toggle_candle_mode">Cambia Modalità Candela</string>
+    <string name="double_tap_hint">Tocca due volte per cambiare colore</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Scegli un colore</string>

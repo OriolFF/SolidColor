@@ -16,11 +16,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -115,8 +120,8 @@ class MainActivity : ComponentActivity() {
 fun SolidColorScreen(viewModel: SolidColorViewModel) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    // Debug effect to monitor candle mode changes
     LaunchedEffect(state.candleMode) {
         Toast.makeText(
             context,
@@ -131,72 +136,79 @@ fun SolidColorScreen(viewModel: SolidColorViewModel) {
         ).show()
     }
 
-    // Get the background color - apply candle effect if active
+    LaunchedEffect(Unit) {
+        snackbarHostState.showSnackbar(
+            message = context.getString(R.string.double_tap_hint),
+            duration = SnackbarDuration.Long
+        )
+    }
+
     val backgroundColor = if (state.candleMode) {
-        // Use the candle animation when candle is active
         CandleAnimation.rememberCandleFlameColor(
             baseColor = state.backgroundColor,
-            intensity = 0.10f  // Increased intensity to make it more noticeable
+            intensity = 0.10f
         )
     } else {
-        // Use the solid color when candle is not active
         state.backgroundColor
     }
 
-    // Main content
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundColor)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onDoubleTap = {
-                        viewModel.dispatch(SolidColorAction.ToggleDialog)
-                    }
-                )
-            }
-    ) {
-        // Color picker dialog
-        if (state.showColorDialog) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Gray.copy(alpha = 0.5f)),
-                contentAlignment = Alignment.Center
-            ) {
-                ColorPickerWithCandle(
-                    modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFFE7E6E6)),
-                    onColorSelected = { color ->
-                        viewModel.dispatch(SolidColorAction.ColorChanged(color))
-                    },
-                    onCandleTapped = {
-                        viewModel.dispatch(SolidColorAction.CandleTapped)
-                    },
-                    candleActive = state.candleMode
-                )
-            }
-        }
-
-        // Floating action button - positioned higher to avoid bottom navigation bar
-        FloatingActionButton(
-            onClick = {
-                viewModel.dispatch(SolidColorAction.CandleTapped)
-            },
-            containerColor = if (state.candleMode) Color(0xFFFF9800) else Color(0xFF607D8B),
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        containerColor = Color.Transparent
+    ) { paddingValues ->
+        Box(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .padding(bottom = 48.dp)
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(backgroundColor)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onDoubleTap = {
+                            viewModel.dispatch(SolidColorAction.ToggleDialog)
+                        }
+                    )
+                }
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_candle),
-                contentDescription = stringResource(R.string.toggle_candle_mode),
-                tint = Color.White,
-                modifier = Modifier.size(32.dp)
-            )
+            if (state.showColorDialog) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Gray.copy(alpha = 0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ColorPickerWithCandle(
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(Color(0xFFE7E6E6)),
+                        onColorSelected = { color ->
+                            viewModel.dispatch(SolidColorAction.ColorChanged(color))
+                        },
+                        onCandleTapped = {
+                            viewModel.dispatch(SolidColorAction.CandleTapped)
+                        },
+                        candleActive = state.candleMode
+                    )
+                }
+            }
+
+            FloatingActionButton(
+                onClick = {
+                    viewModel.dispatch(SolidColorAction.CandleTapped)
+                },
+                containerColor = if (state.candleMode) Color(0xFFFF9800) else Color(0xFF607D8B),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+                    .padding(bottom = 48.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_candle),
+                    contentDescription = stringResource(R.string.toggle_candle_mode),
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }

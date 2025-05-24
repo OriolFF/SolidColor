@@ -6,6 +6,7 @@
     <string name="candle_mode_on">AN</string>
     <string name="candle_mode_off">AUS</string>
     <string name="toggle_candle_mode">Kerzenmodus umschalten</string>
+    <string name="double_tap_hint">Doppeltippen, um die Farbe zu ändern</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Farbe auswählen</string>

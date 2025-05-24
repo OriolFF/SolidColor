@@ -6,6 +6,7 @@
     <string name="candle_mode_on">ACTIVÉ</string>
     <string name="candle_mode_off">DÉSACTIVÉ</string>
     <string name="toggle_candle_mode">Basculer Mode Bougie</string>
+    <string name="double_tap_hint">Appuyez deux fois pour changer de couleur</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Choisir une couleur</string>

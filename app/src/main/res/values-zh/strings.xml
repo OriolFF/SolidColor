@@ -6,6 +6,7 @@
     <string name="candle_mode_on">开启</string>
     <string name="candle_mode_off">关闭</string>
     <string name="toggle_candle_mode">切换蜡烛模式</string>
+    <string name="double_tap_hint">双击更改颜色</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">选择颜色</string>

@@ -6,6 +6,7 @@
     <string name="candle_mode_on">オン</string>
     <string name="candle_mode_off">オフ</string>
     <string name="toggle_candle_mode">キャンドルモード切替</string>
+    <string name="double_tap_hint">ダブルタップで色を変更</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">色を選択</string>

@@ -6,6 +6,7 @@
     <string name="candle_mode_on">LIGADO</string>
     <string name="candle_mode_off">DESLIGADO</string>
     <string name="toggle_candle_mode">Alternar Modo Vela</string>
+    <string name="double_tap_hint">Toque duas vezes para mudar de cor</string>
     
     <!-- Color picker dialog -->
     <string name="pick_a_color">Escolha uma cor</string>

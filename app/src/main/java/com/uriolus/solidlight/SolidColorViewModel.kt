@@ -26,9 +26,9 @@ data class SolidColorState(
  */
 sealed class SolidColorAction {
     data class ColorChanged(val color: Color) : SolidColorAction()
-    object ToggleDialog : SolidColorAction()
-    object CandleTapped : SolidColorAction()
-    object CloseDialog : SolidColorAction()
+    data object ToggleDialog : SolidColorAction()
+    data object CandleTapped : SolidColorAction()
+    data object CloseDialog : SolidColorAction()
 }
 
 /**

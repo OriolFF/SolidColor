@@ -1,6 +1,7 @@
 package com.uriolus.solidlight
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,7 +34,6 @@ import androidx.core.view.WindowCompat
 import com.uriolus.solidlight.data.datasource.PreferencesDataSource
 import com.uriolus.solidlight.data.repository.ColorSettingsRepositoryImpl
 import com.uriolus.solidlight.di.AppModule
-import com.uriolus.solidlight.domain.repository.ColorSettingsRepository
 import com.uriolus.solidlight.domain.usecase.GetColorSettingsUseCase
 import com.uriolus.solidlight.domain.usecase.SaveColorSettingsUseCase
 import com.uriolus.solidlight.ui.theme.SolidLightTheme
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         // Make the app fullscreen
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
